@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">DemoTest</string>
+    <string name="permission">Permission Demo</string>
+    <string name="search">Search</string>
+    <!--Permission Manager-->
+    <string name="permission_contact">Permission Contact</string>
+    <string name="permission_sms">Permission Sms</string>
+</resources>
