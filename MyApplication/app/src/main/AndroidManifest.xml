@@ -26,7 +26,7 @@
         <activity android:name=".permission.ContactPermActivity">
 
         </activity>
-        <activity android:name=".permission.SmsPermissionActivity">
+        <activity android:name=".permission.ManageSingleAppActivity">
 
         </activity>
     </application>

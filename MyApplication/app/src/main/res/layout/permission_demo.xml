@@ -11,13 +11,13 @@
         android:text="@string/permission_contact"
         android:textAllCaps="false">
     </Button>
-
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/permission_sms"
-        android:text="@string/permission_sms"
+        android:id="@+id/permission_singleApp"
+        android:text="@string/manage_single_app"
         android:textAllCaps="false">
+
     </Button>
 
 </LinearLayout>

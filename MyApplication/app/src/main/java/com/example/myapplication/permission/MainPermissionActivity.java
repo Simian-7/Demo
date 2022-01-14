@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import com.example.myapplication.R;
 
 public class MainPermissionActivity extends Activity implements View.OnClickListener{
-    private Button contactPermBtn;
+    private Button contactPermBtn,manageSingleAppBtn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,10 +24,12 @@ public class MainPermissionActivity extends Activity implements View.OnClickList
 
     private void initUI(){
         contactPermBtn = findViewById(R.id.permission_contact);
+        manageSingleAppBtn = findViewById(R.id.permission_singleApp);
     }
 
     private void addListener(){
         contactPermBtn.setOnClickListener(this);
+        manageSingleAppBtn.setOnClickListener(this);
     }
 
     @Override
@@ -36,6 +38,8 @@ public class MainPermissionActivity extends Activity implements View.OnClickList
             case R.id.permission_contact:
                 startContactPermActivity();
                 break;
+            case R.id.permission_singleApp:
+                startManageSignleAppActivity();
             default:
                 break;
         }
@@ -44,6 +48,11 @@ public class MainPermissionActivity extends Activity implements View.OnClickList
     //start Contact Permission
     private void startContactPermActivity(){
         Intent intent = new Intent(this,ContactPermActivity.class);
+        startActivity(intent);
+    }
+
+    private void startManageSignleAppActivity(){
+        Intent intent = new Intent(this, ManageSingleAppActivity.class);
         startActivity(intent);
     }
 }

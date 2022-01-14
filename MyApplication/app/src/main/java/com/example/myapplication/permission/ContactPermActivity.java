@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,7 +33,6 @@ public class ContactPermActivity extends Activity implements View.OnClickListene
     private static final String[] needPermissionList = {"android.permission.READ_CONTACTS","android.permission.WRITE_CONTACTS"};
     private ContactAdapter mContactAdapter;
     private ArrayList<ContactsData> contactList;
-    boolean hasAllGranted = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,9 +43,8 @@ public class ContactPermActivity extends Activity implements View.OnClickListene
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        PermissionUtil.addPermissionList(this,needPermissionList,1);
+    protected void onResume() {
+        super.onResume();
     }
 
     private void initContactUI(){
@@ -65,7 +64,9 @@ public class ContactPermActivity extends Activity implements View.OnClickListene
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.perm_contact_search:
-                searchContact();
+                //查询通讯录
+                PermissionUtil.addPermissionList(this,needPermissionList,1);
+
                 break;
             default:
                 break;
@@ -76,7 +77,7 @@ public class ContactPermActivity extends Activity implements View.OnClickListene
         ContentResolver contactResolver = getContentResolver();
         Cursor cursor = contactResolver.query(contactUri,null,null,null,null);
         ContactsData contactsData = new ContactsData();
-        if(cursor != null){
+        if(cursor.getCount() > 0){
             while (cursor.moveToNext()){
                 //Contact id
                 @SuppressLint("Range")
@@ -105,20 +106,25 @@ public class ContactPermActivity extends Activity implements View.OnClickListene
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        boolean hasAllGranted = true;
+        for(int i = 0; i < permissions.length; i++){
+            Log.d(TAG, "onRequestPermissionsResult: permissions"+ permissions[i]);
+        }
+        Log.d(TAG, "onRequestPermissionsResult11: hasAllGranted = "+hasAllGranted);
         for (int grantResult : grantResults){
             if (grantResult == PackageManager.PERMISSION_DENIED) {
+                Log.d(TAG, "onRequestPermissionsResult: grantResult = "+grantResult);
                 hasAllGranted = false;
                 break;
             }
         }
         if (hasAllGranted){
-
+            searchContact();
+            Log.d(TAG, "onRequestPermissionsResult: hasAllGranted = "+hasAllGranted);
         } else {
-            turnToSetting();
+            //处理禁止权限操作
+            Log.d(TAG, "onRequestPermissionsResult22: hasAllGranted = "+hasAllGranted);
+            Toast.makeText(this,"This permission can't allow!",Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private void turnToSetting(){
-        
     }
 }
