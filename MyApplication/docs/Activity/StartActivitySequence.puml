@@ -1,0 +1,39 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+AppIcon -> Launcher.java: startActivitySafely()
+Launcher.java --> BaseDraggingActivity.java: super.startActivitySafely()
+BaseDraggingActivity.java --> Activity.java: startActivity()
+Activity.java --> Activity.java: startActivityForResult()
+Activity.java --> Instrumentation.java: execStartActivity()
+Instrumentation.java --> ActivityTaskManager.java: startActivity()
+ActivityTaskManager.java --> ActivityTaskManagerService.java: startActivity()
+ActivityTaskManagerService.java --> ActivityTaskManagerService.java: startActivityAsUser()
+ActivityTaskManagerService.java --> ActivityStartController.java: getActivityStartController()
+ActivityTaskManagerService.java --> ActivityStarter.java: obtainStarter()
+ActivityTaskManagerService.java --> ActivityStarter.java: execute()
+ActivityStarter.java --> ActivityStarter.java: executeRequest()
+ActivityStarter.java --> ActivityStarter.java: startActivityUnchecked()
+ActivityStarter.java --> ActivityStarter.java: startActivityInner()
+ActivityStarter.java --> RootWindowContainer.java: resumeFocusedTasksTopActivities()
+RootWindowContainer.java --> Task.java: resumeTopActivityUncheckedLocked()
+Task.java --> Task.java: resumeTopActivityInnerLocked()
+Task.java --> ActivityTaskSupervisor.java: startSpecificActivity()
+ActivityTaskSupervisor.java --> ActivityTaskSupervisor.java: realStartActivityLocked()
+ActivityTaskSupervisor.java --> ClientLifecycleManager.java: scheduleTransaction()
+ClientLifecycleManager.java --> ClientTransaction.java: schedule()
+ClientTransaction.java --> ActivityThread.java: scheduleTransaction()
+ActivityThread.java --> ClientTransactionHandler.java: extends
+ClientTransactionHandler.java --> ActivityThread.java: sendMessage()
+ActivityThread.java --> TransactionExecutor.java: execute()
+TransactionExecutor.java --> TransactionExecutor.java: executeCallbacks()
+TransactionExecutor.java --> TransactionExecutor.java: executeLifecycleState()
+TransactionExecutor.java --> TransactionExecutor.java: cycleToPath()
+TransactionExecutor.java --> ActivityThread.java: handleLaunchActivity()
+ActivityThread.java --> Instrumentation.java: newActivity()
+ActivityThread.java --> Activity.java: attach()
+ActivityThread.java --> Activity.java: ON_CREATE
+
+@enduml
